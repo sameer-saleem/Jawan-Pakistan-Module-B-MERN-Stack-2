@@ -22,10 +22,10 @@ export default function Header() {
 
   return (
     <Box>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Pop a Balloon
+      <AppBar position="static" sx={{background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'}}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography variant="h6" component="div">
+            Welcome <strong className='ms-1'>{ auth.currentUser?.displayName }</strong>
           </Typography>
           <Button color="inherit" onClick={handleLogout}>
             <LogoutIcon />

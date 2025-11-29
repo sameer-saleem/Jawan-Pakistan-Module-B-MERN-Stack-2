@@ -1,4 +1,3 @@
-// src/components/game/GameSummary.jsx
 import { useState, useEffect } from "react";
 import { Box, Paper, Typography, Button, Chip, Divider, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +13,7 @@ export default function GameSummary({ summary, onRetry, onNext }) {
   const { won, score, totalScore, avgReactionTime, targetColor = "RED" } = summary;
   console.log("Destructured values - won:", won, "score:", score, "totalScore:", totalScore);
 
-  // Fetch previous best from Firebase
+
   useEffect(() => {
     const fetchPrev = async () => {
       if (!user) return;
@@ -27,19 +26,19 @@ export default function GameSummary({ summary, onRetry, onNext }) {
     fetchPrev();
   }, [user]);
 
-  // Current Date & Time — Exactly as in PDF
+ 
   const now = new Date();
   const dateStr = now.toLocaleDateString("en-GB", {
     day: "numeric",
     month: "short",
     year: "numeric",
-  }); // 29 Nov 2025
+  }); 
   const timeStr = now.toLocaleTimeString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
   });
 
-  // Dynamic AI Tips — From your PDF
+
   const aiTips = [
     "Try focusing more on the upper-right area next time.",
     "You tend to miss balloons on the left side — scan the full screen!",
@@ -103,7 +102,7 @@ export default function GameSummary({ summary, onRetry, onNext }) {
           boxShadow: "0 25px 70px rgba(0,0,0,0.35)",
         }}
       >
-        {/* Header with Date & Time — EXACTLY LIKE PDF */}
+
         <Box sx={{ textAlign: "center", mb: 4 }}>
           <Typography variant="h6" color="text.secondary" fontWeight="bold">
             Date: {dateStr} | Time: {timeStr}
@@ -115,7 +114,7 @@ export default function GameSummary({ summary, onRetry, onNext }) {
 
         <Divider sx={{ my: 4, borderColor: "#ddd" }} />
 
-        {/* Win/Lose + Target Color */}
+
         <Typography
           variant="h2"
           fontWeight={900}
@@ -139,7 +138,6 @@ export default function GameSummary({ summary, onRetry, onNext }) {
           </Typography>
         </Alert>
 
-        {/* Stats Grid */}
         <Box sx={{ background: "#f8f9fa", p: 5, borderRadius: 4, mb: 5 }}>
           <Typography variant="h5" color="primary" gutterBottom fontWeight="bold">
             Player Performance Summary
@@ -173,7 +171,7 @@ export default function GameSummary({ summary, onRetry, onNext }) {
           </Box>
         </Box>
 
-        {/* AI-Powered Insight — FROM YOUR PDF */}
+
         <Paper elevation={8} sx={{ background: "linear-gradient(45deg, #667eea, #764ba2)", color: "white", p: 5, borderRadius: 5 }}>
           <Typography variant="h4" gutterBottom fontWeight="bold">
             AI-Powered Performance Insight
@@ -183,7 +181,7 @@ export default function GameSummary({ summary, onRetry, onNext }) {
           </Typography>
         </Paper>
 
-        {/* Buttons */}
+ 
         <Box sx={{ display: "flex", gap: 3, justifyContent: "center", mt: 6, flexWrap: "wrap" }}>
           {!won && (
             <Button variant="contained" size="large" color="primary" onClick={onRetry} sx={{ px: 6, py: 2, fontSize: 20 }}>

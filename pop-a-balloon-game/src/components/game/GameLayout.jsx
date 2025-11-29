@@ -1,4 +1,3 @@
-// src/components/game/GameLayout.jsx
 import { Box, Paper, Typography, Button, Grid, Card, CardContent, Chip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { PlayArrow, Star, Timer } from "@mui/icons-material";
@@ -19,19 +18,82 @@ export default function GameLayout() {
     {
       id: 2,
       title: "Level 2: Moving Targets",
-      description: "Balloons move in patterns! Pop 12 of the target color while they bounce around.",
+      description: "Balloons move in patterns! Pop 10 of the target color while they bounce around.",
       difficulty: "Medium",
-      target: "12 balloons",
+      target: "10 balloons",
       time: "~3-4 minutes",
       color: "#f39c12"
     },
     {
       id: 3,
       title: "Level 3: Color Chaos",
-      description: "Colors change rapidly! Pop 15 balloons while staying focused on the target color.",
+      description: "Colors change rapidly! Pop 10 balloons while staying focused on the target color.",
       difficulty: "Hard",
-      target: "15 balloons",
+      target: "10 balloons",
       time: "~4-5 minutes",
+      color: "#e74c3c"
+    },
+    {
+      id: 4,
+      title: "Level 4: Speed Challenge",
+      description: "Faster spawning balloons! Pop 10 of the target color with increased speed.",
+      difficulty: "Expert",
+      target: "10 balloons",
+      time: "~5-6 minutes",
+      color: "#9b59b6"
+    },
+    {
+      id: 5,
+      title: "Level 5: Rapid Fire",
+      description: "Even faster spawning! Pop 10 balloons with rapid color changes.",
+      difficulty: "Expert",
+      target: "10 balloons",
+      time: "~5-6 minutes",
+      color: "#3498db"
+    },
+    {
+      id: 6,
+      title: "Level 6: Lightning Speed",
+      description: "Lightning-fast spawning! Pop 10 balloons in this intense challenge.",
+      difficulty: "Expert",
+      target: "10 balloons",
+      time: "~6-7 minutes",
+      color: "#e67e22"
+    },
+    {
+      id: 7,
+      title: "Level 7: Insane Speed",
+      description: "Insanely fast spawning! Pop 10 balloons with extreme color changes.",
+      difficulty: "Expert",
+      target: "10 balloons",
+      time: "~6-7 minutes",
+      color: "#95a5a6"
+    },
+    {
+      id: 8,
+      title: "Level 8: Chaos Mode",
+      description: "Complete chaos! Pop 10 balloons in this ultimate speed challenge.",
+      difficulty: "Expert",
+      target: "10 balloons",
+      time: "~7-8 minutes",
+      color: "#f1c40f"
+    },
+    {
+      id: 9,
+      title: "Level 9: Extreme Chaos",
+      description: "Extreme difficulty! Pop 10 balloons with near-instantaneous changes.",
+      difficulty: "Master",
+      target: "10 balloons",
+      time: "~7-8 minutes",
+      color: "#2ecc71"
+    },
+    {
+      id: 10,
+      title: "Level 10: Ultimate Challenge",
+      description: "The final test! Pop 10 balloons in the ultimate challenge.",
+      difficulty: "Master",
+      target: "10 balloons",
+      time: "~8-9 minutes",
       color: "#e74c3c"
     }
   ];
@@ -53,7 +115,7 @@ export default function GameLayout() {
       }}
     >
       <Box sx={{ maxWidth: 1200, width: "100%" }}>
-        {/* Header */}
+   
         <Box sx={{ textAlign: "center", mb: 6 }}>
           <Typography
             variant="h2"
@@ -73,7 +135,7 @@ export default function GameLayout() {
           </Typography>
         </Box>
 
-        {/* Quick Start Button */}
+
         <Box sx={{ textAlign: "center", mb: 6 }}>
           <Button
             variant="contained"
@@ -99,10 +161,10 @@ export default function GameLayout() {
           </Button>
         </Box>
 
-        {/* Level Cards */}
+  
         <Grid container spacing={4}>
           {levels.map((level) => (
-            <Grid item xs={12} md={4} key={level.id}>
+            <Grid item xs={12} sm={6} md={6} key={level.id}>
               <Card
                 sx={{
                   height: "100%",
@@ -131,7 +193,10 @@ export default function GameLayout() {
                       label={level.difficulty}
                       color={
                         level.difficulty === "Easy" ? "success" :
-                        level.difficulty === "Medium" ? "warning" : "error"
+                        level.difficulty === "Medium" ? "warning" :
+                        level.difficulty === "Hard" ? "error" :
+                        level.difficulty === "Expert" ? "secondary" :
+                        level.difficulty === "Master" ? "primary" : "default"
                       }
                       size="small"
                     />
@@ -165,7 +230,7 @@ export default function GameLayout() {
           ))}
         </Grid>
 
-        {/* Footer */}
+ 
         <Box sx={{ textAlign: "center", mt: 6 }}>
           <Typography variant="body2" color="white" sx={{ opacity: 0.7 }}>
             Weekend Hackathon 2025 — Web & Mobile App Track

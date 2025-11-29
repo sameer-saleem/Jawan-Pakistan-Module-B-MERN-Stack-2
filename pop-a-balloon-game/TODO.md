@@ -15,3 +15,4 @@
 - [x] Update App.jsx routing for Level2 and Level3
 - [x] Update GameSummary.jsx to navigate to next levels
 - [x] Implement increasing difficulty: faster movement and color change speeds per level
+- [x] Update GameLayout.jsx to display all 10 levels with standardized 10 balloon targets

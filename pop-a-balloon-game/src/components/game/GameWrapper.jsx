@@ -1,8 +1,14 @@
-// src/components/game/GameWrapper.jsx
 import { useState } from "react";
 import Level1 from "./Level1";
 import Level2 from "./Level2";
 import Level3 from "./Level3";
+import Level4 from "./Level4";
+import Level5 from "./Level5";
+import Level6 from "./Level6";
+import Level7 from "./Level7";
+import Level8 from "./Level8";
+import Level9 from "./Level9";
+import Level10 from "./Level10";
 import GameSummary from "./GameSummary";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +20,7 @@ export default function GameWrapper() {
   const handleLevelComplete = (data) => {
     console.log("handleLevelComplete received:", data);
 
-    // AI-Powered Smart Tips based on level
+
     const levelTips = {
       1: [
         "Try focusing more on the upper-right area next time.",
@@ -50,7 +56,7 @@ export default function GameWrapper() {
       aiSuggestion: aiTip,
       targetColor: data.targetColor,
       level: data.level || currentLevel,
-      isLastLevel: (data.level || currentLevel) >= 3,
+      isLastLevel: (data.level || currentLevel) >= 10,
     };
     console.log("Setting summaryData:", summary);
     setSummaryData(summary);
@@ -58,16 +64,16 @@ export default function GameWrapper() {
 
   const handleRetry = () => {
     setSummaryData(null);
-    // Reset to level 1 if they want to retry from beginning
+
     setCurrentLevel(1);
   };
 
   const handleNext = () => {
-    if (currentLevel < 3) {
+    if (currentLevel < 10) {
       setCurrentLevel(currentLevel + 1);
       setSummaryData(null);
     } else {
-      // Game completed - go back to main menu
+
       navigate("/game");
     }
   };
@@ -80,6 +86,20 @@ export default function GameWrapper() {
         return <Level2 onLevelComplete={handleLevelComplete} />;
       case 3:
         return <Level3 onLevelComplete={handleLevelComplete} />;
+      case 4:
+        return <Level4 onLevelComplete={handleLevelComplete} />;
+      case 5:
+        return <Level5 onLevelComplete={handleLevelComplete} />;
+      case 6:
+        return <Level6 onLevelComplete={handleLevelComplete} />;
+      case 7:
+        return <Level7 onLevelComplete={handleLevelComplete} />;
+      case 8:
+        return <Level8 onLevelComplete={handleLevelComplete} />;
+      case 9:
+        return <Level9 onLevelComplete={handleLevelComplete} />;
+      case 10:
+        return <Level10 onLevelComplete={handleLevelComplete} />;
       default:
         return <Level1 onLevelComplete={handleLevelComplete} />;
     }

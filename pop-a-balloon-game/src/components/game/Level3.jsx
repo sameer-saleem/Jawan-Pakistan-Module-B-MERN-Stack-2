@@ -1,4 +1,3 @@
-// src/components/game/Level3.jsx
 import { useState, useEffect, useRef } from "react";
 import { Box, Typography, Alert } from "@mui/material";
 import Balloon from "./Balloon";
@@ -23,12 +22,11 @@ export default function Level3({ onLevelComplete }) {
   const scoreRef = useRef(0);
   const totalPoppedRef = useRef(0);
 
-  // Pick random target color once
+
   useEffect(() => {
     setTargetColor(COLORS[Math.floor(Math.random() * COLORS.length)]);
   }, []);
 
-  // Spawn balloons with movement patterns and color changing
   useEffect(() => {
     if (!targetColor || gameOver) return;
 
@@ -37,14 +35,14 @@ export default function Level3({ onLevelComplete }) {
         id: nextId.current++,
         color: COLORS[Math.floor(Math.random() * COLORS.length)],
         left: Math.random() * 70 + 15 + "%",
-        movementType: Math.floor(Math.random() * 4), // 0: left-right, 1: right-left, 2: top-bottom, 3: bottom-top
-        colorChangeSpeed: 800, // Faster color changing for level 3
+        movementType: Math.floor(Math.random() * 4), 
+        colorChangeSpeed: 800, 
       };
       setBalloons(prev => [...prev, balloon]);
     };
 
     spawn();
-    const interval = setInterval(spawn, 1000); // Even faster spawn rate
+    const interval = setInterval(spawn, 1000); 
     return () => clearInterval(interval);
   }, [targetColor, gameOver]);
 
@@ -61,7 +59,7 @@ export default function Level3({ onLevelComplete }) {
       reactionTimes.current.push(validReactionTime);
       scoreRef.current += 1;
       setScore(scoreRef.current);
-      if (scoreRef.current >= 15) { // Even higher win condition for level 3
+      if (scoreRef.current >= 10) {
         endGame(true);
       }
     } else {
@@ -102,12 +100,12 @@ export default function Level3({ onLevelComplete }) {
 
   return (
     <Box sx={{ position: "relative", height: "80vh", overflow: "hidden", background: "#87CEEB" }}>
-      {/* TOP TEXT FROM PDF */}
+  
       <Alert severity="info" sx={{ position: "absolute", top: 10, left: "50%", transform: "translateX(-50%)", zIndex: 100, fontSize: 18, fontWeight: "bold" }}>
-        LEVEL 3: POP THE BALLOONS BY MOVING YOUR MOUSE OVER THEM
+        LEVEL 3: POP THE BALLOONS BY CLICKING OVER THEM
       </Alert>
 
-      {/* TARGET COLOR INSTRUCTION */}
+  
       <Typography
         variant="h4"
         sx={{
@@ -124,14 +122,14 @@ export default function Level3({ onLevelComplete }) {
         POP <span style={{ color: targetColor.hex, fontSize: "1.4em" }}>{targetColor.name}</span> BALLOONS!
       </Typography>
 
-      {/* HUD */}
+ 
       <Box sx={{ position: "absolute", top: 150, left: 20, background: "rgba(255,255,255,0.95)", p: 3, borderRadius: 3, zIndex: 100 }}>
         <Typography fontSize={24} fontWeight="bold">Level 3</Typography>
-        <Typography fontSize={24} fontWeight="bold">Score: {score}/15</Typography>
+        <Typography fontSize={24} fontWeight="bold">Score: {score}/10</Typography>
         <Typography fontSize={24} fontWeight="bold">Lives: {"❤️".repeat(lives)}</Typography>
       </Box>
 
-      {/* Balloons */}
+   
       {balloons.map(b => (
         <Balloon
           key={b.id}

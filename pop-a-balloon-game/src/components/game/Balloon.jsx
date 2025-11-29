@@ -1,4 +1,3 @@
-// src/components/game/Balloon.jsx
 import { motion } from "framer-motion";
 import { useRef, useEffect } from "react";
 

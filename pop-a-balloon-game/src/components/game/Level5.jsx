@@ -11,7 +11,7 @@ const COLORS = [
   { name: "PURPLE", hex: "#9b59b6" },
 ];
 
-export default function Level1({ onLevelComplete }) {
+export default function Level5({ onLevelComplete }) {
   const [targetColor, setTargetColor] = useState(null);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
@@ -21,7 +21,6 @@ export default function Level1({ onLevelComplete }) {
   const reactionTimes = useRef([]);
   const scoreRef = useRef(0);
   const totalPoppedRef = useRef(0);
-
 
   useEffect(() => {
     setTargetColor(COLORS[Math.floor(Math.random() * COLORS.length)]);
@@ -36,12 +35,14 @@ export default function Level1({ onLevelComplete }) {
         id: nextId.current++,
         color: COLORS[Math.floor(Math.random() * COLORS.length)],
         left: Math.random() * 70 + 15 + "%",
+        movementType: Math.floor(Math.random() * 4), 
+        colorChangeSpeed: 600, 
       };
       setBalloons(prev => [...prev, balloon]);
     };
 
     spawn();
-    const interval = setInterval(spawn, 1400);
+    const interval = setInterval(spawn, 800); 
     return () => clearInterval(interval);
   }, [targetColor, gameOver]);
 
@@ -72,41 +73,39 @@ export default function Level1({ onLevelComplete }) {
     }
   };
 
+  const endGame = (won) => {
+    setGameOver(true);
 
-const endGame = (won) => {
-  setGameOver(true);
+    const avg = reactionTimes.current.length > 0
+      ? Math.round(reactionTimes.current.reduce((a, b) => a + b) / reactionTimes.current.length)
+      : 0;
 
-  const avg = reactionTimes.current.length > 0
-    ? Math.round(reactionTimes.current.reduce((a, b) => a + b) / reactionTimes.current.length)
-    : 0;
+    const finalTargetColorName = targetColor?.name || "UNKNOWN";
 
-
-  const finalTargetColorName = targetColor?.name || "UNKNOWN";
-
-  setTimeout(() => {
-    onLevelComplete({
-      won,
-      score: scoreRef.current,
-      totalScore: totalPoppedRef.current,
-      wrongPops: totalPoppedRef.current - scoreRef.current,
-      avgReactionTime: avg,
-      targetColor: finalTargetColorName,   
-      livesLeft: lives,                   
-      level: 1,                           
-    });
-  }, 1200);
-};
+    setTimeout(() => {
+      onLevelComplete({
+        won,
+        score: scoreRef.current,
+        totalScore: totalPoppedRef.current,
+        wrongPops: totalPoppedRef.current - scoreRef.current,
+        avgReactionTime: avg,
+        targetColor: finalTargetColorName,
+        livesLeft: lives,
+        level: 5,
+      });
+    }, 1200);
+  };
 
   if (!targetColor) return <Box>Loading...</Box>;
 
   return (
     <Box sx={{ position: "relative", height: "80vh", overflow: "hidden", background: "#87CEEB" }}>
-   
+ 
       <Alert severity="info" sx={{ position: "absolute", top: 10, left: "50%", transform: "translateX(-50%)", zIndex: 100, fontSize: 18, fontWeight: "bold" }}>
-        POP THE BALLOONS BY CLICKING OVER THEM
+        LEVEL 5: POP THE BALLOONS BY CLICKING OVER THEM
       </Alert>
 
-   
+
       <Typography
         variant="h4"
         sx={{
@@ -124,12 +123,12 @@ const endGame = (won) => {
       </Typography>
 
       <Box sx={{ position: "absolute", top: 150, left: 20, background: "rgba(255,255,255,0.95)", p: 3, borderRadius: 3, zIndex: 100 }}>
-        <Typography fontSize={24} fontWeight="bold">Level 1</Typography>
+        <Typography fontSize={24} fontWeight="bold">Level 5</Typography>
         <Typography fontSize={24} fontWeight="bold">Score: {score}/10</Typography>
         <Typography fontSize={24} fontWeight="bold">Lives: {"❤️".repeat(lives)}</Typography>
       </Box>
 
-  
+
       {balloons.map(b => (
         <Balloon
           key={b.id}
@@ -137,13 +136,16 @@ const endGame = (won) => {
           left={b.left}
           isCorrect={b.color.hex === targetColor.hex}
           onHover={(rt) => handleHover(b.id, rt, b.color)}
+          movementType={b.movementType}
+          level={5}
+          colorChangeSpeed={b.colorChangeSpeed}
         />
       ))}
 
       {gameOver && (
         <Box sx={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.8)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200 }}>
           <Typography variant="h2" color="white" fontWeight="bold">
-            {lives > 0 ? "LEVEL COMPLETE!" : "GAME OVER"}
+            {lives > 0 ? "LEVEL 5 COMPLETE!" : "GAME OVER"}
           </Typography>
         </Box>
       )}
