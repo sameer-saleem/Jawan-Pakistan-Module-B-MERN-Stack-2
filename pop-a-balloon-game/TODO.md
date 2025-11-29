@@ -1,0 +1,17 @@
+- [x] Fix undefined score in GameSummary by using refs for synchronous score tracking in Level1.jsx
+- [x] Add win condition: end game when score >= 10 correct balloons
+- [x] Add totalScore tracking (total balloons popped, including incorrect)
+- [x] Update GameWrapper.jsx to pass totalScore in summaryData
+- [x] Update GameSummary.jsx to display totalScore alongside correct score
+- [x] Fix wrongPops undefined issue in GameLayout.jsx by calculating totalPopped - correctScore
+- [x] Fix GameLayout.jsx to show dynamic target color instead of hardcoded "Red" and display score as "X/10"
+- [x] Fix reaction time showing "NaNms" by ensuring valid numbers are pushed to reactionTimes array
+- [x] Fix signup navigation issue - signup was redirecting to sign-in instead of game
+- [x] Test the changes to ensure score shows correctly on summary
+- [x] Create Level2.jsx with horizontal and vertical balloon movement patterns
+- [x] Create Level3.jsx with color-changing balloons
+- [x] Update Balloon.jsx to support different movement patterns and color changing
+- [x] Update GameWrapper.jsx to handle level progression
+- [x] Update App.jsx routing for Level2 and Level3
+- [x] Update GameSummary.jsx to navigate to next levels
+- [x] Implement increasing difficulty: faster movement and color change speeds per level
