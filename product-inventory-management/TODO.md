@@ -1,0 +1,6 @@
+- [ ] Fix typo in "Already have an account?" text
+- [ ] Add a subtitle under the "Sign up" title
+- [ ] Enhance Card component styling with improved shadows, borders, and theme colors
+- [ ] Improve spacing and layout within the form
+- [ ] Improve link styling to make it more prominent and aligned
+- [ ] Add subtle hover effects and transitions to interactive elements (button and link)

@@ -1,0 +1,25 @@
+.sidebar {
+    background-color: #fff;
+    width: 300px;
+}
+
+.ms-1 {
+    margin-left: 4px;
+    display: inline-block;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    border-bottom: 1px solid #ccc;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+    font-size: 18px;
+    padding: .5rem;
+    display: block;
+}

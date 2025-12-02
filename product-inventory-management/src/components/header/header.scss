@@ -1,0 +1,27 @@
+header {
+    background-color: var(--white);
+    box-shadow: 0 0 0 1px var(--box-shadow);
+    padding-block: .8rem;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    >ul {
+        display: flex;
+        gap: 1.5rem;
+
+        li {
+            >a {
+                font-size: 18px;
+                color: var(--primary);
+                line-height: 24px;
+                font-weight: 500;
+            }
+        }
+    }
+}
