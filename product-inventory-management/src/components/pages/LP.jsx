@@ -66,7 +66,6 @@ export default function LandingPage() {
 
   return (
     <>
-      {/* Hero Section */}
       <Box
         sx={{
           backgroundImage: 'url(https://images.unsplash.com/photo-1553413077-190dd305871c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80)',
@@ -85,7 +84,7 @@ export default function LandingPage() {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(37, 99, 235, 0.7)', // Overlay for text readability
+            backgroundColor: 'rgba(37, 99, 235, 0.7)',
             zIndex: 1,
           },
         }}
@@ -105,8 +104,8 @@ export default function LandingPage() {
               <Typography
                 variant="h1"
                 sx={{
-                  fontSize: { xs: '2.2rem', md: '2.8rem' }, // Reduced font sizes
-                  fontWeight: 800,
+                  fontSize: { xs: '2.2rem', md: '2.8rem' },
+                  fontWeight: 600,
                   lineHeight: 1.1,
                   mb: 3,
                 }}
@@ -117,7 +116,7 @@ export default function LandingPage() {
               </Typography>
               <Typography
                 variant="h5"
-                sx={{ opacity: 0.95, mb: 5, fontWeight: 400, fontSize: { xs: '1.1rem', md: '1.3rem' } }} // Reduced
+                sx={{ opacity: 0.95, mb: 5, fontWeight: 400, fontSize: {xs: '1rem',  sm: '1.1rem', md: '1.3rem' } }}
               >
                 Smarter Inventory. Stronger Business.
               </Typography>
@@ -128,10 +127,10 @@ export default function LandingPage() {
                   variant="contained"
                   size="large"
                   sx={{
-                    px: 6,
-                    py: 2,
+                    px: 5,
+              py: 1.5,
                     borderRadius: '16px',
-                    fontSize: '1.1rem', // Reduced
+                   fontSize: {xs: '1rem',  sm: '1.1rem' },
                     fontWeight: 700,
                     bgcolor: 'white',
                     color: '#2563eb',
@@ -152,13 +151,13 @@ export default function LandingPage() {
                   variant="outlined"
                   size="large"
                   sx={{
-                    px: 6,
-                    py: 2,
+                    px: 5,
+              py: 1.5,
                     borderRadius: '16px',
                     borderColor: 'white',
                     color: 'white',
                     fontWeight: 600,
-                    fontSize: '1rem', // Reduced
+                    fontSize: {xs: '1rem',  sm: '1.1rem' },
                     '&:hover': { bgcolor: 'rgba(255,255,255,0.1)', borderColor: 'white' },
                   }}
                 >
@@ -166,35 +165,21 @@ export default function LandingPage() {
                 </Button>
               </Stack>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Box
-                component="img"
-                src="https://images.unsplash.com/photo-1553413077-190dd305871c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                alt="Inventory Dashboard Preview"
-                sx={{
-                  width: '100%',
-                  borderRadius: '24px',
-                  boxShadow: '0 25px 60px rgba(0,0,0,0.4)',
-                  border: '10px solid rgba(255,255,255,0.15)',
-                }}
-              />
-            </Grid>
           </Grid>
         </Container>
       </Box>
 
-      {/* Features Section */}
       <Container sx={{ py: { xs: 10, md: 14 } }}>
-        <Typography variant="h3" align="center" fontWeight={700} gutterBottom sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}> {/* Reduced */}
+        <Typography variant="h3" align="center" fontWeight={600} gutterBottom sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
           Simple. Powerful. Built for You.
         </Typography>
-        <Typography variant="h6" align="center" color="text.secondary" sx={{ mb: 8, maxWidth: '700px', mx: 'auto', fontSize: '1.1rem' }}> {/* Reduced */}
+        <Typography variant="h6" align="center" color="text.secondary" sx={{ mb: 8, maxWidth: '700px', mx: 'auto', fontSize: '1.1rem' }}>
           Everything you need to manage your inventory — without the complexity.
         </Typography>
 
         <Grid container spacing={4}>
           {features.map((feature, i) => (
-            <Grid item xs={12} sm={6} md={4} key={i}>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
               <Card
                 elevation={0}
                 sx={{
@@ -213,10 +198,10 @@ export default function LandingPage() {
                 }}
               >
                 <Box sx={{ color: '#2563eb', mb: 3 }}>{feature.icon}</Box>
-                <Typography variant="h5" fontWeight={700} gutterBottom sx={{ fontSize: '1.2rem' }}> {/* Reduced */}
+                <Typography variant="h5" fontWeight={700} gutterBottom sx={{ fontSize: '1.2rem' }}>
                   {feature.title}
                 </Typography>
-                <Typography color="text.secondary" sx={{ fontSize: '1rem' }}> {/* Reduced */}
+                <Typography color="text.secondary" sx={{ fontSize: '1rem' }}>
                   {feature.desc}
                 </Typography>
               </Card>
@@ -225,10 +210,9 @@ export default function LandingPage() {
         </Grid>
       </Container>
 
-      {/* Benefits Strip */}
-      <Box sx={{ bgcolor: '#f0f7ff', py: 10 }}>
+      <Box sx={{ bgcolor: '#f0f7ff', py: 8 }}>
         <Container>
-          <Grid container spacing={4}>
+          <Grid container spacing={4} sx={{ justifyContent: { xs: 'flex-start', sm: 'center' } }}>
             {[
               { icon: <CloudDone sx={{ fontSize: 40 }} />, text: 'Access Anywhere – Web & Mobile' },
               { icon: <Security sx={{ fontSize: 40 }} />, text: 'Secure Firebase Authentication' },
@@ -237,10 +221,10 @@ export default function LandingPage() {
               { icon: <TrendingUp sx={{ fontSize: 40 }} />, text: 'Grow Without Limits' },
               { icon: <AutoAwesome sx={{ fontSize: 40 }} />, text: 'Clean & Modern Design' },
             ].map((item, i) => (
-              <Grid item xs={12} sm={6} md={4} key={i}>
+              <Grid size={{ xs: "12", sm: "6", md:"4" }} key={i}>
                 <Stack direction="row" spacing={3} alignItems="center">
                   <Box sx={{ color: '#2563eb' }}>{item.icon}</Box>
-                  <Typography variant="h6" fontWeight={600} sx={{ fontSize: '1.1rem' }}> {/* Reduced */}
+                  <Typography variant="h6" fontWeight={600} sx={{ fontSize: '1.1rem' }}>
                     {item.text}
                   </Typography>
                 </Stack>
@@ -250,13 +234,12 @@ export default function LandingPage() {
         </Container>
       </Box>
 
-      {/* Final CTA */}
-      <Box sx={{ bgcolor: '#1e40af', color: 'white', py: 14 }}>
+      <Box sx={{ bgcolor: '#1e40af', color: 'white', py: 8 }}>
         <Container maxWidth="md" sx={{ textAlign: 'center' }}>
-          <Typography variant="h3" fontWeight={800} gutterBottom sx={{ fontSize: { xs: '2.2rem', md: '3rem' } }}> {/* Reduced */}
+          <Typography variant="h2" fontWeight={800} gutterBottom sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
             Start Managing Your Inventory Today
           </Typography>
-          <Typography variant="h6" sx={{ opacity: 0.9, mb: 6, fontSize: '1.1rem' }}> {/* Reduced */}
+          <Typography variant="h6" sx={{ opacity: 0.9, mb: 6, fontSize: '1.1rem' }}>
             No credit card required • Free forever for personal use
           </Typography>
           <Button
@@ -265,10 +248,10 @@ export default function LandingPage() {
             variant="contained"
             size="large"
             sx={{
-              px: 8,
-              py: 2.5,
+              px: 5,
+              py: 1.5,
               borderRadius: '16px',
-              fontSize: '1.2rem', // Slightly reduced
+              fontSize: {xs: '1rem',  sm: '1.2rem' },
               fontWeight: 700,
               bgcolor: 'white',
               color: '#1e40af',
@@ -284,12 +267,13 @@ export default function LandingPage() {
         </Container>
       </Box>
 
-      <Box sx={{ bgcolor: '#0f172a', color: '#94a3b8', py: 6 }}>
+      <Box sx={{ bgcolor: '#0f172a', color: '#94a3b8', py: 2 }}>
         <Container>
           <Typography align="center" variant="body1">
-            © 2025 Product Inventory Management System • Made with ❤️ by{' '}
+            © 2025 Product Inventory Management System • Made by{' '}
             <Link
-              href="javascript:void(0)"
+              href="https://www.linkedin.com/in/sameer-%F0%9F%8E%AF-558304283/"
+              target="_blank"
               sx={{
                 color: '#2563eb',
                 textDecoration: 'none',
