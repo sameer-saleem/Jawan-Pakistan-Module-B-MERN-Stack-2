@@ -84,7 +84,8 @@ const Students = () => {
         <>
             <Box sx={{ width: 'calc(100% - 240px)', ml: 'auto', p: 2, height: 'calc(100vh - 65px)' }}>
                 <Typography variant="h1" sx={{ fontSize: '1.5rem', fontWeight: '600', display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-                    Students List <Button variant="contained" onClick={handleClickOpen}>Add Student</Button>
+                    Products List 
+                    {/* <Button variant="contained" onClick={handleClickOpen}>Add Student</Button> */}
                 </Typography>
                 <TableContainer component={Paper}>
                     <Table sx={{ border: '1px solid #ccc' }} aria-label="simple table">

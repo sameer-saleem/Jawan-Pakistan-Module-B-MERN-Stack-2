@@ -12,7 +12,7 @@ export default function Header() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            LMS
+            Product Inventory Managment
           </Typography>
           <Button color="inherit">
             Welcome <strong className='ms-1'>{ auth.currentUser?.displayName }</strong>

@@ -11,8 +11,10 @@ import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { updateProfile } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';  
+import { Snackbar } from '@mui/material';
 
-// Main container — full height with split background
 const PageContainer = styled(Stack)(({ theme }) => ({
   height: '100dvh',
   width: '100%',
@@ -23,7 +25,6 @@ const PageContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-// Left blue panel (branding)
 const BrandPanel = styled(Box)(({ theme }) => ({
   flex: 1,
   background: 'linear-gradient(135deg, #0052CC 0%, #003B99 100%)',
@@ -51,7 +52,6 @@ const BrandPanel = styled(Box)(({ theme }) => ({
   },
 }));
 
-// Right form panel
 const FormPanel = styled(MuiCard)(({ theme }) => ({
   flex: 1,
   display: 'flex',
@@ -69,7 +69,6 @@ const FormPanel = styled(MuiCard)(({ theme }) => ({
   },
 }));
 
-// Custom styled TextField (like the image)
 const StyledTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
     borderRadius: '12px',
@@ -99,33 +98,75 @@ export default function Signup() {
     email: '',
     password: '',
   });
+  const [disabled, setDisabled] = useState(true);
+  const [toast, setToast] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const updatedForm = { ...formData, [e.target.name]: e.target.value };
+    setFormData(updatedForm);
+
+    const isValid =
+      updatedForm.fullname.length >= 4 &&
+      updatedForm.email.length >= 9 &&
+      updatedForm.password.length >= 6;
+
+    setDisabled(!isValid);
   };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const userCred = await createUserWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
-      await updateProfile(userCred.user, { displayName: formData.fullname });
+        const userCred = await createUserWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+        await updateProfile(userCred.user, { displayName: formData.fullname });
 
-      alert('Account created successfully!');
-      navigate('/sign-in');
+        setToast({
+          open: true,
+          message: "Account created successfully!",
+          severity: "success",
+        });
+
+        setTimeout(() => {
+          navigate('/sign-in');
+        }, 2000);
+
     } catch (error) {
-      alert('Error: ' + error.message);
+      setToast({
+        open: true,
+        message: "Error: " + error.message,
+        severity: "error",
+      });
     }
   };
 
   return (
     <>
+    <Snackbar
+      open={toast.open}
+      autoHideDuration={2000}
+      onClose={() => setToast({ ...toast, open: false })}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+    >
+      <Alert
+        severity={toast.severity}
+        variant="filled"
+        onClose={() => setToast({ ...toast, open: false })}
+      >
+        {toast.message}
+      </Alert>
+    </Snackbar>
       <CssBaseline />
       <PageContainer direction={{ xs: 'column', md: 'row' }}>
-        {/* Left Brand Panel */}
+
         <BrandPanel>
           <Typography
             variant="h3"
@@ -169,7 +210,7 @@ export default function Signup() {
           </Button>
         </BrandPanel>
 
-        {/* Right Form Panel */}
+
         <FormPanel elevation={0}>
           <Box sx={{ width: '100%', maxWidth: 420 }}>
             <Typography component="h1" variant="h4" fontWeight={600} gutterBottom>
@@ -231,7 +272,14 @@ export default function Signup() {
                       boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
                     },
                     transition: 'all 0.3s ease',
+                    '&.Mui-disabled': {
+                      backgroundColor: '#9e9e9e',
+                      color: '#ffffff',
+                      transform: 'none',
+                      boxShadow: 'none',
+                    },
                   }}
+                  disabled={disabled}
                 >
                   Sign Up
                 </Button>
@@ -247,7 +295,7 @@ export default function Signup() {
                     textDecoration: 'none',
                   }}
                 >
-                  Login
+                  Sing in
                 </Link>
               </Typography>
             </Box>

@@ -1,10 +1,6 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -14,54 +10,95 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
+import Alert from '@mui/material/Alert';
+import { Snackbar } from '@mui/material';
 
-const Card = styled(MuiCard)(({ theme }) => ({
+const PageContainer = styled(Stack)(({ theme }) => ({
+  height: '100dvh',
+  width: '100%',
+  overflow: 'hidden',
+  backgroundColor: '#f0f4f8',
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+  },
+}));
+
+const BrandPanel = styled(Box)(({ theme }) => ({
+  flex: 1,
+  background: 'linear-gradient(135deg, #0052CC 0%, #003B99 100%)',
+  color: 'white',
   display: 'flex',
   flexDirection: 'column',
-  alignSelf: 'center',
-  width: '100%',
-  padding: theme.spacing(4),
-  gap: theme.spacing(2),
-  margin: 'auto',
-  [theme.breakpoints.up('sm')]: {
-    maxWidth: '450px',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: theme.spacing(8),
+  position: 'relative',
+  [theme.breakpoints.down('md')]: {
+    borderRadius: '16px 16px 0 0',
+    minHeight: '35vh',
+    padding: theme.spacing(6),
   },
-  boxShadow:
-    'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
-  ...theme.applyStyles('dark', {
-    boxShadow:
-      'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
-  }),
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: '100%',
+    height: '150px',
+    background: 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1440 320%27%3E%3Cpath fill=%27rgba(255,255,255,0.1)%27 fill-opacity=%270.3%27 d=%27M0,192L48,197.3C96,203,192,213,288,213.3C384,213,480,203,576,181.3C672,160,768,128,864,128C960,128,1056,160,1152,181.3C1248,203,1344,213,1392,218.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z%27%3E%3C/path%3E%3C/svg%3E") bottom no-repeat',
+    backgroundSize: 'cover',
+  },
 }));
 
-const SignInContainer = styled(Stack)(({ theme }) => ({
-  height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
-  minHeight: '100%',
-  padding: theme.spacing(2),
-  [theme.breakpoints.up('sm')]: {
-    padding: theme.spacing(4),
-  },
-  '&::before': {
-    content: '""',
-    display: 'block',
-    position: 'absolute',
-    zIndex: -1,
-    inset: 0,
-    backgroundImage:
-      'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
-    backgroundRepeat: 'no-repeat',
-    ...theme.applyStyles('dark', {
-      backgroundImage:
-        'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
-    }),
+const FormPanel = styled(MuiCard)(({ theme }) => ({
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: theme.spacing(8),
+  backgroundColor: 'white',
+  borderRadius: '16px',
+  boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
+  [theme.breakpoints.down('md')]: {
+    borderRadius: '0 0 16px 16px',
+    padding: theme.spacing(6),
+    minHeight: '65vh',
   },
 }));
+
+const StyledTextField = styled(TextField)({
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '12px',
+    backgroundColor: '#f8fbff',
+    '& fieldset': {
+      borderColor: '#e0e7ff',
+    },
+    '&:hover fieldset': {
+      borderColor: '#0052CC',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#0052CC',
+    },
+  },
+  '& .MuiInputLabel-root': {
+    color: '#64748b',
+  },
+  '& .MuiInputBase-input': {
+    padding: '14px 16px',
+  },
+});
 
 export default function SignIn() {
-
   const [formData, setFormData] = useState({
     email: '',
     password: ''
+  });
+  const [disabled, setDisabled] = useState(true);
+  const [toast, setToast] = useState({
+    open: false,
+    message: "",
+    severity: "success",
   });
 
   const navigate = useNavigate();
@@ -76,100 +113,184 @@ export default function SignIn() {
         email: '',
         password: ''
       });
-      navigate("/students");
+
+      setToast({
+        open: true,
+        message: "Welcome Back!",
+        severity: "success",
+      });
+
+      setTimeout(() => {
+        navigate("/dashboard");
+       }, 2000);
 
     } catch (error) {
-      alert("Error signing in:", error.message);
+      setToast({
+        open: true,
+        message: "Error signing in:" + error.message,
+        severity: "error",
+      });
     }
 
   };
 
   const handleChange = (e) => {
 
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const updatedForm = { ...formData, [e.target.name]: e.target.value };
+    setFormData(updatedForm);
+
+    const isValid =
+      updatedForm.email.length >= 9 &&
+      updatedForm.password.length >= 6;
+
+    setDisabled(!isValid);
 
   };
 
-
   return (
-    <>      
-    <CssBaseline enableColorScheme />
-      <SignInContainer direction="column" justifyContent="space-between">
-        <Card variant="outlined">
+    <>
+    <Snackbar
+      open={toast.open}
+      autoHideDuration={2000}
+      onClose={() => setToast({ ...toast, open: false })}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+    >
+      <Alert
+        severity={toast.severity}
+        variant="filled"
+        onClose={() => setToast({ ...toast, open: false })}
+      >
+        {toast.message}
+      </Alert>
+    </Snackbar>
+      <CssBaseline />
+      <PageContainer direction={{ xs: 'column', md: 'row' }}>
+
+        <BrandPanel>
           <Typography
+            variant="h3"
             component="h1"
-            variant="h4"
-            sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
+            fontWeight={700}
+            gutterBottom
+            sx={{ fontSize: { xs: '2.5rem', md: '3.5rem', textAlign: 'center' } }}
           >
-            Sign in
+            Product Inventory Management System
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSignIn}
-            noValidate
+          <Typography
+            variant="h6"
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              gap: 2,
+              opacity: 0.9,
+              textAlign: 'center',
+              maxWidth: '420px',
+              fontWeight: 400,
             }}
           >
-            <FormControl>
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <TextField
-                id="email"
-                type="email"
-                name="email"
-                placeholder="your@email.com"
-                autoComplete="email"
-                autoFocus
-                required
-                fullWidth
-                variant="outlined"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor="password">Password</FormLabel>
-              <TextField
-                name="password"
-                placeholder="••••••"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                autoFocus
-                required
-                fullWidth
-                variant="outlined"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type='submit'
-              fullWidth
-              variant="contained"
-            >
-              Sign in
-            </Button>
-            <Link
-              component="button"
-              type="button"
-              variant="body2"
-              sx={{ alignSelf: 'center' }}
-              to="/"
-            >
-              Sign Up
-            </Link>
-          </Box>
-        </Card>
-      </SignInContainer>
-    </>
+            Smarter Inventory. Stronger Business.
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            component={Link}
+            to="/website"
+            sx={{
+              mt: 6,
+              borderRadius: '30px',
+              px: 5,
+              backgroundColor: 'rgba(255,255,255,0.2)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255,255,255,0.3)',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: 'rgba(255,255,255,0.3)',
+              },
+            }}
+          >
+            Go to Website
+          </Button>
+        </BrandPanel>
 
+
+        <FormPanel elevation={0}>
+          <Box sx={{ width: '100%', maxWidth: 420 }}>
+            <Typography component="h1" variant="h4" fontWeight={600} gutterBottom>
+              Hello Again!
+            </Typography>
+            <Typography variant="body1" color="text.secondary" mb={4}>
+              Welcome back
+            </Typography>
+
+            <Box component="form" onSubmit={handleSignIn} noValidate>
+              <Stack spacing={3}>
+                <StyledTextField
+                  required
+                  fullWidth
+                  name="email"
+                  label="Email address"
+                  type="email"
+                  placeholder="your@email.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+                <StyledTextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    mt: 2,
+                    py: 1.8,
+                    borderRadius: '12px',
+                    backgroundColor: '#0052CC',
+                    textTransform: 'none',
+                    fontSize: '1.1rem',
+                    fontWeight: 600,
+                    '&:hover': {
+                      backgroundColor: '#003b99',
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
+                    },
+                    transition: 'all 0.3s ease',
+                    '&.Mui-disabled': {
+                      backgroundColor: '#9e9e9e',
+                      color: '#ffffff',
+                      transform: 'none',
+                      boxShadow: 'none',
+                    },
+                  }}
+                  disabled={disabled}
+                >
+                  Sign In
+                </Button>
+              </Stack>
+
+              <Typography variant="body2" align="center" sx={{ mt: 4, color: 'text.secondary' }}>
+                New here? {' '}
+                <Link
+                  to="/sign-up"
+                  style={{
+                    color: '#0052CC',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                  }}
+                >
+                  Create an account
+                </Link>
+              </Typography>
+            </Box>
+          </Box>
+        </FormPanel>
+      </PageContainer>
+    </>
   );
 }

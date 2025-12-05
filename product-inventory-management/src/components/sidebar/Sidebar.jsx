@@ -50,7 +50,7 @@ export default function Sidebar() {
             <Toolbar />
             <Divider />
             <List>
-                {['Students'].map((text, index) => (
+                {['Dashboard'].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton
                             component={Link}
@@ -64,7 +64,7 @@ export default function Sidebar() {
                     </ListItem>
                 ))}
             </List>
-            <Divider />
+            {/* <Divider />
             <List>
                 {['Logout'].map((text, index) => (
                     <ListItem key={text} disablePadding>
@@ -80,7 +80,7 @@ export default function Sidebar() {
                         </ListItemButton>
                     </ListItem>
                 ))}
-            </List>
+            </List> */}
         </div>
     );
 
